@@ -19,4 +19,9 @@ class EnvironTest < Minitest::Test
     bad = Environ.env_nothing
     assert_nil bad
   end
+
+  def test_it_can_set_path
+    Environ.env_path = "test"
+    
+  end
 end
