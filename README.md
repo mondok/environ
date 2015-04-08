@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/mondok/environ.svg?branch=master)](https://travis-ci.org/mondok/environ)
 # Environ
 
 Environ is a Ruby gem that lets you access environment variables in an object oriented manner.  Instead of using `ENV['VARIABLE']`, Environ lets you do `Environ.env_variable`.
