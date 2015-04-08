@@ -21,7 +21,16 @@ class EnvironTest < Minitest::Test
   end
 
   def test_it_can_set_path
-    Environ.env_path = "test"
-    
+    Environ.env_path = 'test'
+    path = Environ.env_path
+    assert_equal path, 'test'
+  end
+
+  def test_it_can_reset_variables
+    Environ.env_path = 'test'
+    path = Environ.env_path
+    Environ.reset!
+    path2 = Environ.env_path
+    refute_equal path, path2
   end
 end

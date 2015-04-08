@@ -1,8 +1,9 @@
-require "environ/version"
+require_relative "environ/version"
 
 # Public: Main handler for accessing variables
 module Environ
 	module_function
+	@_data = {}
 
   # Public: Returns all environment variables as hash
   #
@@ -13,6 +14,18 @@ module Environ
   # returns hash of all variables
 	def all
 		ENV
+	end
+
+	# Public: Resets all environment variables back to their original values
+  #
+  # Examples
+  #
+  #  Environ.reset!
+  #
+  # returns nothing
+	def reset!
+		@_data.clear
+		create_methods
 	end
 
 	def method_missing(method, *args, &block)
@@ -45,8 +58,14 @@ module Environ
   #
   # returns nothing
 	def create_method(name, val)
-		define_singleton_method("env_#{name.strip.downcase}") do
-			val
+		var_name = "env_#{name.strip.downcase}"
+		@_data[var_name] = val
+		define_singleton_method(var_name) do
+			@_data[var_name]
+		end
+
+		define_singleton_method(:"#{var_name}=") do |value|
+			@_data[var_name] = value
 		end
 	end
 
