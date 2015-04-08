@@ -27,7 +27,15 @@ Let's say you want to access the PATH variable.  You could do:
 With Environ, you can access it OOP style with:
 
     Environ.env_path
-    
+
+You can also set values if you need to:
+
+    Environ.env_path = 'new_path'
+
+If you set a variable and need to reset everything, you can call:
+
+    Environ.reset!
+
 You can also access all the keys in the environment with:
 
     Environ.all
