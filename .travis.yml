@@ -1,0 +1,12 @@
+language: ruby
+rvm:
+  - "2.0.0"
+  - "2.1.0"
+  - "2.2.0"
+  - "jruby-9.0.0.0.pre1"
+branches:
+  only:
+    - master
+notifications:
+  email: false
+script: bundle exec rake
