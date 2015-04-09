@@ -2,8 +2,8 @@ require_relative "environ/version"
 
 # Public: Main handler for accessing variables
 module Environ
-	module_function
-	@_data = {}
+  module_function
+  @_data = {}
 
   # Public: Returns all environment variables as hash
   #
@@ -12,30 +12,30 @@ module Environ
   #  Environ.all => {"PATH"=>"/Users/someone/.rvm/gems/ruby-2.2.0/bin", "RUBY_VERSION"=>"ruby-2.2.0", "_"=>"/Users/someone/.rvm/rubies/ruby-2.2.0/bin/irb"}
   #
   # returns hash of all variables
-	def all
-		ENV
-	end
+  def all
+    ENV
+  end
 
-	# Public: Resets all environment variables back to their original values
+  # Public: Resets all environment variables back to their original values
   #
   # Examples
   #
   #  Environ.reset!
   #
   # returns nothing
-	def reset!
-		@_data.clear
-		create_methods
-	end
+  def reset!
+    @_data.clear
+    create_methods
+  end
 
-	def method_missing(method, *args, &block)
-		if (method.to_s =~ /env_/)
-			create_method(method.to_s, nil)
-			nil
-		else
-			super.method_missing(method, *args, &block)
-		end
-	end
+  def method_missing(method, *args, &block)
+    if (method.to_s =~ /env_/)
+      create_method(method.to_s, nil)
+      nil
+    else
+      super.method_missing(method, *args, &block)
+    end
+  end
 
   # Public: Dynamically defines singleton methods from ENV
   #
@@ -44,11 +44,11 @@ module Environ
   #  Environ.create_methods
   #
   # returns nothing
-	def create_methods
-		ENV.each do |key, val|
-			create_method(key, val)
-		end
-	end
+  def create_methods
+    ENV.each do |key, val|
+      create_method(key, val)
+    end
+  end
 
   # Public: Dynamically defines a singleton method
   #
@@ -57,19 +57,19 @@ module Environ
   #  Environ.create_method('path', 'something')
   #
   # returns nothing
-	def create_method(name, val)
-		var_name = "env_#{name.strip.downcase}"
-		@_data[var_name] = val
-		define_singleton_method(var_name) do
-			@_data[var_name]
-		end
+  def create_method(name, val)
+    var_name = "env_#{name.strip.downcase}"
+    @_data[var_name] = val
+    define_singleton_method(var_name) do
+      @_data[var_name]
+    end
 
-		define_singleton_method(:"#{var_name}=") do |value|
-			@_data[var_name] = value
-		end
-	end
+    define_singleton_method(:"#{var_name}=") do |value|
+      @_data[var_name] = value
+    end
+  end
 
   # initialize methods
-	self.create_methods
+  self.create_methods
 
 end
