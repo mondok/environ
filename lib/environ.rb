@@ -2,34 +2,34 @@ require_relative "environ/version"
 
 # Public: Main handler for accessing variables
 module Environ
-	module_function
-	
-	@_data = {}
-	@_no_conflict = true
+  module_function
 
-	# Public: Returns boolean indicating whether no conflict prefixing is on or off
+  @_data = {}
+  @_no_conflict = true
+
+  # Public: Returns boolean indicating whether no conflict prefixing is on or off
   #
   # Examples
   #
   #  Environ.no_conflict => true
   #
   # returns boolean
-	def no_conflict
-		@_no_conflict
-	end
+  def no_conflict
+    @_no_conflict
+  end
 
-	# Public: Sets boolean indicating whether no conflict prefixing is on or off
-	# If set to false, env vars can be accessed without the 'env_' prefix
-	# Examples
-	#
-	#  Environ.no_conflict = false
-	#  Environ.path => {"PATH"=>"/Users/someone/.rvm/gems/ruby-2.2.0/bin", "RUBY_VERSION"=>"ruby-2.2.0", "_"=>"/Users/someone/.rvm/rubies/ruby-2.2.0/bin/irb"}
-	#
-	# returns nothing
-	def no_conflict=(value)
-		@_no_conflict = value
-		create_methods unless @_no_conflict
-	end
+  # Public: Sets boolean indicating whether no conflict prefixing is on or off
+  # If set to false, env vars can be accessed without the 'env_' prefix
+  # Examples
+  #
+  #  Environ.no_conflict = false
+  #  Environ.path => {"PATH"=>"/Users/someone/.rvm/gems/ruby-2.2.0/bin", "RUBY_VERSION"=>"ruby-2.2.0", "_"=>"/Users/someone/.rvm/rubies/ruby-2.2.0/bin/irb"}
+  #
+  # returns nothing
+  def no_conflict=(value)
+    @_no_conflict = value
+    create_methods unless @_no_conflict
+  end
 
   # Public: Returns all environment variables as hash
   #
@@ -84,8 +84,8 @@ module Environ
   #
   # returns nothing
   def create_method(name, val)
-		var_prefix = @_no_conflict ? 'env_' : ''
-		var_name = "#{var_prefix}#{name.strip.downcase}"
+    var_prefix = @_no_conflict ? 'env_' : ''
+    var_name = "#{var_prefix}#{name.strip.downcase}"
     @_data[var_name] = val
     define_singleton_method(var_name) do
       @_data[var_name]
