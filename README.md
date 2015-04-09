@@ -43,6 +43,13 @@ You can also access all the keys in the environment with:
 
 This will return a hash of all the environment variables.
 
+If you choose to live on the edge, you can also disable no-conflict support and access variables directly by their ENV name:
+
+    Environ.no_conflict = false
+    path = Environ.path
+
+No conflict is true by default to prevent unexpected results.
+
 Finally, Environ respects accessing variables that may not be set.  If you call something like `Environ.env_doesnt_exist` it will return nil rather than throw an exception.
 
 ## Development
