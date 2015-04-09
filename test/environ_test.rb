@@ -1,6 +1,10 @@
 require 'minitest_helper'
 
 class EnvironTest < Minitest::Test
+  def setup
+    Environ.no_conflict = true
+  end
+
   def test_that_it_has_a_version_number
     refute_nil ::Environ::VERSION
   end
@@ -33,4 +37,23 @@ class EnvironTest < Minitest::Test
     path2 = Environ.env_path
     refute_equal path, path2
   end
+
+  def test_it_defaults_to_no_conflict
+    Environ.no_conflict = true
+    nc = Environ.no_conflict
+    assert_equal nc, true
+  end
+
+  def test_it_can_change_no_conflict
+    Environ.no_conflict = false
+    nc = Environ.no_conflict
+    assert_equal nc, false
+  end
+
+  def test_it_can_obey_no_conflict_rules
+    Environ.no_conflict = false
+    path = Environ.path
+    refute_nil path
+  end
+
 end
